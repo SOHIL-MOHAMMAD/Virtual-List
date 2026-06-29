@@ -1,10 +1,14 @@
 # Custom React List Virtualization GuideThis repository contains a lightweight, custom implementation of a Virtualized List in React using TypeScript.## What is a Virtualized List?When dealing with massive datasets (e.g., 50,000+ items), rendering every single item into the Document Object Model (DOM) will severely degrade browser performance. It causes high memory usage, sluggish scrolling, and slow initial load times.Virtualization (or Windowing) solves this problem by only rendering the items that are currently visible inside the user's viewport (plus a tiny buffer above and below). As the user scrolls, items that leave the view are unmounted from the DOM, and new items entering the view are mounted in their place.### The Visual ConceptPlaintext[   Buffer Row (Hidden)   ]  <- Pre-rendered so fast scrolling doesn't show white gaps
+
+```
 ===========================
 |      Visible Row #1     |  <- Viewport Window (What the user actually sees)
 |      Visible Row #2     |
 |      Visible Row #3     |
 ===========================
 [   Buffer Row (Hidden)   ]
+
+```
 Instead of 50,000 DOM nodes, the browser only ever manages about 10 to 15 DOM nodes at any given moment.
 ## Component Breakdown & Architecture
 
@@ -29,6 +33,7 @@ $$startIndex = \lfloor \frac{scrollTop}{itemHeight} \rfloor$$
 ### End Index Calculation
 
 Determines which item index is at the very bottom edge of the visible window.
+
 $$endIndex = \lceil \frac{scrollTop + windowHeight}{itemHeight} \rceil$$
 
 ### Inline CSS Item Offsets
